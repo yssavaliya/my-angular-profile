@@ -1,0 +1,39 @@
+<aside class="w-64 h-full bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 
+              p-6 flex flex-col transition-colors duration-300 dark:border-r dark:border-gray-700">
+
+  <!-- Profile -->
+  <div class="mb-8 text-center">
+    <h2 class="text-2xl font-bold">{{ data?.name }}</h2>
+    <p class="text-sm text-gray-600 dark:text-gray-400">{{ data?.title }}</p>
+  </div>
+
+  <!-- Navigation -->
+  <nav class="flex flex-col space-y-2">
+    <a routerLink="/" routerLinkActive="bg-gray-300 dark:bg-gray-700" [routerLinkActiveOptions]="{ exact: true }"
+      class="px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
+      Home
+    </a>
+    <a routerLink="/about" routerLinkActive="bg-gray-300 dark:bg-gray-700"
+      class="px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
+      About
+    </a>
+    <a routerLink="/projects" routerLinkActive="bg-gray-300 dark:bg-gray-700"
+      class="px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
+      Projects
+    </a>
+    <a routerLink="/contact" routerLinkActive="bg-gray-300 dark:bg-gray-700"
+      class="px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
+      Contact
+    </a>
+  </nav>
+
+  <!-- Theme Toggle -->
+  <div class="mt-auto pt-4 text-center">
+    <button (click)="toggleTheme()" class="flex items-center justify-center gap-2 px-4 py-2 rounded bg-gray-200 dark:bg-gray-700
+                   hover:bg-gray-300 dark:hover:bg-gray-600 border border-gray-300 dark:border-gray-600
+                   transition-colors duration-300">
+      <lucide-icon [img]="SunIcon" *ngIf="!isDarkMode" class="w-5 h-5"></lucide-icon>
+      <lucide-icon [img]="MoonIcon" *ngIf="isDarkMode" class="w-5 h-5"></lucide-icon>
+    </button>
+  </div>
+</aside>
