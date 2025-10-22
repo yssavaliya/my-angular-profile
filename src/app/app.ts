@@ -16,6 +16,8 @@ export class App implements OnInit {
   isSidebarOpen = false;
   readonly MenuIcon = Menu;
   readonly CloseIcon = X;
+  stars: { top: string, left: string }[] = [];
+
 
   // track dark mode for icons
   isDarkMode = document.documentElement.classList.contains('dark');
@@ -45,6 +47,18 @@ export class App implements OnInit {
         this.isDarkMode = false;
       }
     }
+    this.generateStars(60);
+  }
+
+
+  generateStars(maxCount: number) {
+    // Generate a random number of stars between 10 and maxCount (inclusive)
+    const count = Math.floor(Math.random() * (maxCount - 10 + 1)) + 10;
+
+    this.stars = Array.from({ length: count }, () => ({
+      top: Math.random() * 100 + 'vh',
+      left: Math.random() * 100 + 'vw',
+    }));
   }
 
   toggleTheme() {
