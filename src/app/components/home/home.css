@@ -1,0 +1,14 @@
+.cursor {
+  display: inline-block;
+  width: 0.8ch;           /* width of the cursor */
+  height: 1.2em;          /* height slightly taller than text */
+  background-color: currentColor; /* matches text color */
+  vertical-align: bottom; 
+  animation: blink 0.7s steps(1) infinite;
+  margin-left: 1px;       /* optional spacing after text */
+}
+
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0; }
+}

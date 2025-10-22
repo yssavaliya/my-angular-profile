@@ -8,22 +8,29 @@
       {{ data?.title }}
     </p>
     <p class="text-gray-600 dark:text-gray-400 mb-8">
-      {{ data?.about }}
+      <span>{{ typedText }}</span><span class="cursor"></span>
     </p>
-    <div class="flex justify-center gap-4">
-      <a *ngIf="data?.contact?.github" href="{{ data.contact.github }}" target="_blank"
-         class="px-4 py-2 bg-gray-200 dark:bg-gray-700 rounded hover:bg-gray-300 dark:hover:bg-gray-600 transition">
-        GitHub
+
+    <div class="flex justify-center gap-6">
+      <!-- GitHub -->
+      <a *ngIf="data?.contact?.github" [href]="data.contact.github" target="_blank"
+        class="transition-colors duration-300 hover:text-gray-500 dark:hover:text-gray-400">
+        <lucide-icon [img]="GitHubIcon" class="w-8 h-8"></lucide-icon>
       </a>
-      <a *ngIf="data?.contact?.linkedin" href="{{ data.contact.linkedin }}" target="_blank"
-         class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
-        LinkedIn
+
+      <!-- LinkedIn -->
+      <a *ngIf="data?.contact?.linkedin" [href]="data.contact.linkedin" target="_blank"
+        class="transition-colors duration-300 hover:text-blue-600 dark:hover:text-blue-400">
+        <lucide-icon [img]="LinkedInIcon" class="w-8 h-8"></lucide-icon>
       </a>
-      <a *ngIf="data?.contact?.email" href="mailto:{{ data.contact.email }}"
-         class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
-        Email
+
+      <!-- Email -->
+      <a *ngIf="data?.contact?.email" [href]="'mailto:' + data.contact.email"
+        class="transition-colors duration-300 hover:text-green-600 dark:hover:text-green-400">
+        <lucide-icon [img]="EmailIcon" class="w-8 h-8"></lucide-icon>
       </a>
     </div>
+
   </div>
 
   <!-- Projects -->
@@ -31,11 +38,11 @@
     <h2 class="text-3xl font-semibold mb-6">Featured Projects</h2>
     <div class="grid gap-6 md:grid-cols-2">
       <div *ngFor="let project of data?.projects"
-           class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition">
+        class="p-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow hover:shadow-lg transition">
         <h3 class="text-xl font-bold mb-2">{{ project.name }}</h3>
         <p class="text-gray-700 dark:text-gray-300 mb-4">{{ project.description }}</p>
         <a *ngIf="project.link" href="{{ project.link }}" target="_blank"
-           class="text-blue-600 dark:text-blue-400 font-medium hover:underline">
+          class="text-blue-600 dark:text-blue-400 font-medium hover:underline">
           View Project
         </a>
       </div>

@@ -9,24 +9,22 @@
 <div class="flex h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
 
   <!-- Sidebar -->
-  <app-sidebar 
-    [data]="data"
-    [toggleTheme]="toggleTheme.bind(this)"
-    [isDarkMode]="isDarkMode"       
-    [ngClass]="{
+  <app-sidebar [data]="data" [toggleTheme]="toggleTheme.bind(this)" [isDarkMode]="isDarkMode" [ngClass]="{
       'fixed top-0 left-0 transform -translate-x-full md:translate-x-0 md:relative md:transform-none': true,
       'translate-x-0': isSidebarOpen
-    }"
-    class="z-20 transition-transform h-full duration-300">
+    }" class="z-20 transition-transform h-full duration-300">
   </app-sidebar>
 
   <!-- Overlay for mobile -->
-  <div *ngIf="isSidebarOpen" 
-       class="fixed inset-0 bg-black bg-opacity-25 z-10 md:hidden"
-       (click)="isSidebarOpen = false"></div>
+  <div *ngIf="isSidebarOpen" class="fixed inset-0 bg-black bg-opacity-25 z-10 md:hidden"
+    (click)="isSidebarOpen = false"></div>
 
   <!-- Main content -->
   <main class="flex-1 overflow-auto p-6">
-    <router-outlet ></router-outlet>
+    <div class="shooting-stars absolute inset-0 pointer-events-none"
+      [ngClass]="{'dark': isDarkMode, 'light': !isDarkMode}">
+      <div *ngFor="let star of stars" class="star" [ngStyle]="{'top': star.top, 'left': star.left}"></div>
+    </div>
+    <router-outlet></router-outlet>
   </main>
 </div>
