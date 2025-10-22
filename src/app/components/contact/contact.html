@@ -1,0 +1,21 @@
+<section class="page max-w-3xl mx-auto py-12 px-6">
+  <h1 class="text-3xl font-bold mb-6">Contact</h1>
+
+  <div class="space-y-4 text-gray-700 dark:text-gray-300">
+    <p><strong>Email:</strong> <a [href]="'mailto:' + contact.email" class="text-indigo-600 dark:text-indigo-400 hover:underline">{{ contact.email }}</a></p>
+
+    <p>
+      <strong>GitHub:</strong>
+      <a [href]="contact.github" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline">
+        {{ contact.github }}
+      </a>
+    </p>
+
+    <p>
+      <strong>LinkedIn:</strong>
+      <a [href]="contact.linkedin" target="_blank" class="text-indigo-600 dark:text-indigo-400 hover:underline">
+        {{ contact.linkedin }}
+      </a>
+    </p>
+  </div>
+</section>
