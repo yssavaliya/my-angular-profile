@@ -1,0 +1,4 @@
+/* Optional subtle animation for the menu */
+:host {
+  display: block;
+}
