@@ -1,7 +1,6 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import JSONEditor from 'jsoneditor';
-import 'jsoneditor/dist/jsoneditor.css';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 import { db } from '../../../services/firebase.config';
@@ -31,7 +30,8 @@ export class Jsoneditor implements AfterViewInit {
       mainMenuBar: true,
       navigationBar: true,
       history: true,
-      theme: this.getThemeColors()
+      theme: this.getThemeColors(),
+      icon: false
     });
 
     try {
