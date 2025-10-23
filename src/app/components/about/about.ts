@@ -15,7 +15,6 @@ export class About implements OnInit {
   ngOnInit() {
     this.dataService.getData().subscribe((res) => {
       this.data = res;
-      console.log('About component data:', this.data);
     });
   }
 }

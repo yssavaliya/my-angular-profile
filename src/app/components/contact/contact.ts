@@ -15,7 +15,6 @@ export class Contact implements OnInit {
   ngOnInit() {
     this.dataService.getData().subscribe((res) => {
       this.contact = res.contact || {};
-      console.log('Contact loaded:', this.contact);
     });
   }
 }

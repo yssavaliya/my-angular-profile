@@ -15,7 +15,6 @@ export class Projects implements OnInit {
   ngOnInit() {
     this.dataService.getData().subscribe((res) => {
       this.projects = res.projects || [];
-      console.log('Projects loaded:', this.projects);
     });
   }
 }
