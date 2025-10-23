@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { DataService } from './services/data.service';
 import { Sidebar } from './components/sidebar/sidebar';
-import { LucideAngularModule, Menu, X } from 'lucide-angular';
+import { LucideAngularModule, Menu, X, Sun, Moon } from 'lucide-angular';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,8 @@ export class App implements OnInit {
   readonly MenuIcon = Menu;
   readonly CloseIcon = X;
   stars: { top: string, left: string }[] = [];
-
+  readonly Sun = Sun;
+  readonly Moon = Moon;
 
   // track dark mode for icons
   isDarkMode = document.documentElement.classList.contains('dark');
