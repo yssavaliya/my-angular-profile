@@ -7,6 +7,7 @@ import { Dynamicsection } from './components/dynamicsection/dynamicsection';
 import { AuthGuard } from './guards/auth.guard';
 import { Adminhome } from './components/admin/adminhome/adminhome';
 import { Login } from './components/login/login';
+import { Jsoneditor } from './components/admin/jsoneditor/jsoneditor';
 
 export const routes: Routes = [
   { path: '', component: Home },
@@ -15,5 +16,6 @@ export const routes: Routes = [
   { path: 'contact', component: Contact },
   { path: 'login', component: Login },                    // move before :section
   { path: 'admin/home', component: Adminhome, canActivate: [AuthGuard] },
+  { path: 'admin/json-editor', component: Jsoneditor, canActivate: [AuthGuard] },
   { path: ':section', component: Dynamicsection },        // always keep dynamic route last
 ];

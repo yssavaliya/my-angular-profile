@@ -19,17 +19,20 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
 // List of allowed emails
-const ALLOWED_USERS = [
-    'ysavaliya215@rku.ac.in'
-];
+const ALLOWED_USERS = ['ysavaliya215@rku.ac.in'];
+
 
 @Injectable({ providedIn: 'root' })
 export class FirebaseAuthService {
-    user$ = new BehaviorSubject<User | null>(null);
+user$ = new BehaviorSubject<User | null | undefined>(undefined);
 
     constructor(private router: Router) {
         // Track user state
-        onAuthStateChanged(auth, user => this.user$.next(user));
+       onAuthStateChanged(auth, user => {
+          console.log('🔥 Auth state changed:', user?.email || 'No user');
+  setTimeout(() => this.user$.next(user), 0);
+});
+
     }
 
     async googleSignIn() {
@@ -40,6 +43,7 @@ export class FirebaseAuthService {
 
             // Ensure user.email is not null
             if (user.email && ALLOWED_USERS.includes(user.email)) {
+                  console.log('✅ Logged in user:', user.email);
                 this.user$.next(user);
                 this.router.navigate(['/admin/home']);
             } else {
