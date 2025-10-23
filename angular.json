@@ -13,6 +13,9 @@
         "build": {
           "builder": "@angular/build:application",
           "options": {
+            "loader": {
+              ".ttf": "binary"
+            },
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
@@ -23,6 +26,11 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor",
+                "output": "/assets/monaco/"
               },
               {
                 "glob": "favicon.ico",
@@ -87,6 +95,11 @@
                 "glob": "**/*",
                 "input": "src/assets",
                 "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "node_modules/monaco-editor",
+                "output": "/assets/monaco/"
               },
               {
                 "glob": "favicon.ico",
