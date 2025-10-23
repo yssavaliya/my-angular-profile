@@ -4,6 +4,20 @@
 
   <!-- Profile -->
   <div class="mb-8 text-center">
+    <!-- Profile Image -->
+    <div *ngIf="data?.image; else noImage"
+         class="mx-auto mb-4 w-24 h-24 rounded-full overflow-hidden border-2 border-gray-300 dark:border-gray-600">
+      <img [src]="data.image" alt="{{ data.name }}" class="w-full h-full object-cover">
+    </div>
+
+    <!-- Fallback if no image -->
+    <ng-template #noImage>
+      <div class="mx-auto mb-4 w-24 h-24 rounded-full bg-gray-300 dark:bg-gray-600 
+                  flex items-center justify-center text-xl font-bold text-gray-700 dark:text-gray-200">
+        {{ data?.name?.charAt(0) || 'U' }}
+      </div>
+    </ng-template>
+
     <h2 class="text-2xl font-bold">{{ data?.name }}</h2>
     <p class="text-sm text-gray-600 dark:text-gray-400">{{ data?.title }}</p>
   </div>
