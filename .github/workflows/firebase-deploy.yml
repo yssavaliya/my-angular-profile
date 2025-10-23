@@ -3,7 +3,7 @@ name: Deploy to Firebase Hosting
 on:
   push:
     branches:
-      - main   # Runs when you push or merge to main
+      - main   # Runs on push to main
   workflow_dispatch: # Allow manual runs
 
 jobs:
@@ -11,21 +11,30 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # 1️⃣ Checkout code
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Use Node.js 20
+      # 2️⃣ Use Node.js 20
+      - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: 'npm'
 
+      # 3️⃣ Clean previous builds
+      - name: Clean dist folder
+        run: rm -rf dist/*
+
+      # 4️⃣ Install dependencies
       - name: Install dependencies
         run: npm ci
 
+      # 5️⃣ Build Angular app (production)
       - name: Build Angular app
-        run: npm run build --if-present
+        run: npm run build -- --configuration production
 
+      # 6️⃣ Deploy to Firebase Hosting
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v14.17.0
         with:
