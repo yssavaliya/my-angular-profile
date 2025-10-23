@@ -1,6 +1,6 @@
-import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import * as monaco from 'monaco-editor';
+import { FormsModule } from '@angular/forms';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 import { db } from '../../../services/firebase.config';
@@ -9,39 +9,30 @@ import { AdminMenu } from '../admin-menu/admin-menu';
 @Component({
   selector: 'app-jsoneditor',
   standalone: true,
-  imports: [CommonModule, AdminMenu],
+  imports: [CommonModule, FormsModule, AdminMenu],
   templateUrl: './jsoneditor.html',
   styleUrls: ['./jsoneditor.css']
 })
-export class Jsoneditor implements AfterViewInit {
-  @ViewChild('editorContainer') editorContainer!: ElementRef;
-  editor!: monaco.editor.IStandaloneCodeEditor;
+export class Jsoneditor implements OnInit {
+  jsonString = '';
   loading = true;
   error = '';
   isDarkMode = document.documentElement.classList.contains('dark');
 
   constructor(public auth: FirebaseAuthService) {}
 
-  async ngAfterViewInit() {
+  async ngOnInit() {
     try {
       const docRef = doc(db, 'data', 'main');
       const docSnap = await getDoc(docRef);
 
-      let initialJson = '{}';
       if (docSnap.exists()) {
         const jsonData = docSnap.data()['json'];
         console.log('Firestore JSON data:', jsonData);
-        initialJson = JSON.stringify(jsonData, null, 2);
+        this.jsonString = JSON.stringify(jsonData, null, 2);
+      } else {
+        this.jsonString = '{}';
       }
-
-      // Initialize Monaco Editor
-      this.editor = monaco.editor.create(this.editorContainer.nativeElement, {
-        value: initialJson,
-        language: 'json',
-        theme: this.isDarkMode ? 'vs-dark' : 'vs',
-        automaticLayout: true,
-        minimap: { enabled: false }
-      });
     } catch (err) {
       this.error = 'Failed to load JSON: ' + err;
       console.error(this.error);
@@ -52,20 +43,17 @@ export class Jsoneditor implements AfterViewInit {
 
   async save() {
     try {
-      const jsonText = this.editor.getValue();
-      const data = JSON.parse(jsonText);
-      console.log('Saving JSON data to Firestore:', data);
+      const data = JSON.parse(this.jsonString);
       await setDoc(doc(db, 'data', 'main'), { json: data });
       alert('✅ JSON saved successfully!');
     } catch (err) {
       console.error('Failed to save JSON:', err);
-      alert('❌ Failed to save JSON: ' + err);
+      alert('❌ Invalid JSON or save failed: ' + err);
     }
   }
 
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
     document.documentElement.classList.toggle('dark', this.isDarkMode);
-    monaco.editor.setTheme(this.isDarkMode ? 'vs-dark' : 'vs');
   }
 }

@@ -1,28 +1,30 @@
 <app-admin-menu></app-admin-menu>
 
-<div class="min-h-[70vh] p-4 bg-white dark:bg-gray-900 rounded shadow mt-4">
-  <div #editorContainer class="w-full h-[600px] border border-gray-300 dark:border-gray-700"></div>
+<div class="min-h-[70vh] p-4 bg-white dark:bg-gray-900 rounded shadow mt-4 flex flex-col">
+  
+  <!-- Loader -->
+  <span *ngIf="loading" class="loader self-center mb-4"></span>
 
+  <!-- Error -->
+  <div *ngIf="error" class="text-red-600 mb-2">
+    {{ error }}
+  </div>
+
+  <!-- JSON Textarea -->
+  <textarea
+    [(ngModel)]="jsonString"
+    class="flex-1 w-full p-2 border rounded resize-none bg-gray-50 dark:bg-gray-800 dark:text-white"
+    rows="20"
+  ></textarea>
+
+  <!-- Buttons -->
   <div class="flex justify-between mt-4">
-    <button 
-      (click)="save()" 
-      class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition"
-    >
+    <button (click)="save()" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">
       Save JSON
     </button>
 
-    <button 
-      (click)="toggleTheme()" 
-      class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition"
-    >
+    <button (click)="toggleTheme()" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 transition">
       Toggle Theme
     </button>
-  </div>
-
-  <div *ngIf="loading" class="mt-2 text-gray-600 dark:text-gray-300">
-    Loading JSON...
-  </div>
-  <div *ngIf="error" class="mt-2 text-red-600">
-    {{ error }}
   </div>
 </div>
