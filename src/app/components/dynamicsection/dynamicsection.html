@@ -1,0 +1,82 @@
+<div
+    class="px-4 sm:px-6 md:px-12 py-8 text-gray-900 dark:text-gray-100 transition-colors duration-300 max-w-5xl mx-auto w-full">
+    <ng-container *ngIf="sectionData; else notFound">
+        <ng-container *ngFor="let block of sectionData.content">
+
+            <!-- Headings -->
+            <h1 *ngIf="block.type === 'h1'"
+                class="text-3xl sm:text-4xl md:text-5xl font-extrabold mb-6 text-center md:text-left">{{ block.text }}
+            </h1>
+            <h2 *ngIf="block.type === 'h2'"
+                class="text-2xl sm:text-3xl font-semibold mb-5 mt-8 border-l-4 border-gray-400 pl-3">{{ block.text }}
+            </h2>
+            <h3 *ngIf="block.type === 'h3'"
+                class="text-xl sm:text-2xl font-semibold mb-4 mt-6 text-gray-700 dark:text-gray-300">{{ block.text }}
+            </h3>
+            <h4 *ngIf="block.type === 'h4'"
+                class="text-lg sm:text-xl font-medium mb-3 mt-4 text-gray-600 dark:text-gray-400">{{ block.text }}</h4>
+            <h5 *ngIf="block.type === 'h5'"
+                class="text-base sm:text-lg font-medium mb-2 mt-3 text-gray-500 dark:text-gray-400">{{ block.text }}
+            </h5>
+
+            <!-- Paragraph -->
+            <p *ngIf="block.type === 'p'"
+                class="text-base sm:text-lg leading-relaxed mb-5 text-gray-700 dark:text-gray-300">{{ block.text }}</p>
+
+            <!-- List -->
+            <ul *ngIf="block.type === 'list'"
+                class="list-disc pl-6 sm:pl-8 space-y-2 mb-6 text-base sm:text-lg text-gray-800 dark:text-gray-200">
+                <li *ngFor="let item of block.items" class="transition-transform duration-200 hover:translate-x-1">{{
+                    item }}</li>
+            </ul>
+
+            <!-- Quote -->
+            <div *ngIf="block.type === 'quote'" class="mb-6 space-y-3">
+                <blockquote *ngFor="let q of block.items" class="pl-4 border-l-4 border-gray-400 italic"
+                    [ngClass]="{'font-bold': q.bold}">
+                    "{{ q.text }}"
+                </blockquote>
+            </div>
+
+            <!-- Cards -->
+            <!-- Cards -->
+            <!-- Cards -->
+            <div *ngIf="block.type === 'cards'" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mb-8">
+                <div *ngFor="let card of block.cards"
+                    class="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between overflow-hidden">
+
+                    <!-- Card Image -->
+                    <!-- Card Image -->
+                    <img *ngIf="card.image" [src]="card.image" alt="{{ card.title }}" class="w-full mb-4 rounded"
+                        [ngClass]="{
+                                    'h-auto max-h-64 object-contain': isSmallImage(card.image),
+                                    'h-40 object-cover': !isSmallImage(card.image)
+                                    }">
+
+
+                    <div class="p-6 flex flex-col justify-between flex-1">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-2 text-gray-900 dark:text-gray-100">{{ card.title }}
+                            </h3>
+                            <p class="text-gray-700 dark:text-gray-300 mb-4">{{ card.description }}</p>
+                        </div>
+                        <a *ngIf="card.link" [href]="card.link" target="_blank"
+                            class="mt-auto inline-block px-4 py-2 bg-gray-300 dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded hover:bg-gray-400 dark:hover:bg-gray-600 transition-colors duration-300 text-center">
+                            View
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </ng-container>
+    </ng-container>
+
+    <!-- Not Found -->
+    <ng-template #notFound>
+        <p class="text-gray-500 dark:text-gray-400 text-center text-lg sm:text-xl mt-12">
+            Section "{{ sectionName }}" not found.
+        </p>
+    </ng-template>
+</div>
