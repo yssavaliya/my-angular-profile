@@ -1,6 +1,6 @@
 import { Component, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import JSONEditor from 'jsoneditor';
+import * as monaco from 'monaco-editor';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { FirebaseAuthService } from '../../../services/firebase-auth.service';
 import { db } from '../../../services/firebase.config';
@@ -15,7 +15,7 @@ import { AdminMenu } from '../admin-menu/admin-menu';
 })
 export class Jsoneditor implements AfterViewInit {
   @ViewChild('editorContainer') editorContainer!: ElementRef;
-  editor!: any;
+  editor!: monaco.editor.IStandaloneCodeEditor;
   loading = true;
   error = '';
   isDarkMode = document.documentElement.classList.contains('dark');
@@ -23,28 +23,25 @@ export class Jsoneditor implements AfterViewInit {
   constructor(public auth: FirebaseAuthService) {}
 
   async ngAfterViewInit() {
-    // Initialize editor
-    this.editor = new JSONEditor(this.editorContainer.nativeElement, {
-      mode: 'code',
-      onError: (err: any) => alert(err.toString()),
-      mainMenuBar: true,
-      navigationBar: true,
-      history: true,
-      theme: this.getThemeColors(),
-      icon: false
-    });
-
     try {
-      const docRef = doc(db, 'data', 'main'); // collection: data, document: main
+      const docRef = doc(db, 'data', 'main');
       const docSnap = await getDoc(docRef);
 
+      let initialJson = '{}';
       if (docSnap.exists()) {
         const jsonData = docSnap.data()['json'];
         console.log('Firestore JSON data:', jsonData);
-        this.editor.set(jsonData); // directly set as object
-      } else {
-        this.editor.set({});
+        initialJson = JSON.stringify(jsonData, null, 2);
       }
+
+      // Initialize Monaco Editor
+      this.editor = monaco.editor.create(this.editorContainer.nativeElement, {
+        value: initialJson,
+        language: 'json',
+        theme: this.isDarkMode ? 'vs-dark' : 'vs',
+        automaticLayout: true,
+        minimap: { enabled: false }
+      });
     } catch (err) {
       this.error = 'Failed to load JSON: ' + err;
       console.error(this.error);
@@ -55,10 +52,9 @@ export class Jsoneditor implements AfterViewInit {
 
   async save() {
     try {
-      const data = this.editor.get();
+      const jsonText = this.editor.getValue();
+      const data = JSON.parse(jsonText);
       console.log('Saving JSON data to Firestore:', data);
-
-      // Save as JSON object (not string)
       await setDoc(doc(db, 'data', 'main'), { json: data });
       alert('✅ JSON saved successfully!');
     } catch (err) {
@@ -70,23 +66,6 @@ export class Jsoneditor implements AfterViewInit {
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
     document.documentElement.classList.toggle('dark', this.isDarkMode);
-    this.editor.updateOptions({ theme: this.getThemeColors() });
-  }
-
-  private getThemeColors() {
-    if (this.isDarkMode) {
-      return {
-        base: '#1e1e2f',
-        background: '#1e1e2f',
-        string: '#98c379',
-        number: '#d19a66',
-        boolean: '#56b6c2',
-        null: '#c678dd',
-        key: '#61afef',
-        error: '#ff6f61'
-      };
-    } else {
-      return null; // default light theme
-    }
+    monaco.editor.setTheme(this.isDarkMode ? 'vs-dark' : 'vs');
   }
 }

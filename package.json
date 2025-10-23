@@ -30,8 +30,8 @@
     "@tailwindcss/postcss": "^4.1.15",
     "crypto-js": "^4.2.0",
     "firebase": "^12.4.0",
-    "jsoneditor": "^10.4.2",
     "lucide-angular": "^0.546.0",
+    "monaco-editor": "^0.54.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

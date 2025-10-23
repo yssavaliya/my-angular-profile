@@ -1,11 +1,8 @@
-<!-- Admin Menu Component -->
 <app-admin-menu></app-admin-menu>
 
-<!-- JSON Editor Container -->
 <div class="min-h-[70vh] p-4 bg-white dark:bg-gray-900 rounded shadow mt-4">
-  <div #editorContainer class="w-full h-[600px]"></div>
+  <div #editorContainer class="w-full h-[600px] border border-gray-300 dark:border-gray-700"></div>
 
-  <!-- Save & Theme Buttons -->
   <div class="flex justify-between mt-4">
     <button 
       (click)="save()" 
@@ -22,7 +19,6 @@
     </button>
   </div>
 
-  <!-- Loading & Error Messages -->
   <div *ngIf="loading" class="mt-2 text-gray-600 dark:text-gray-300">
     Loading JSON...
   </div>
