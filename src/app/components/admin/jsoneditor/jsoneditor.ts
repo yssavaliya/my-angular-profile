@@ -19,7 +19,7 @@ export class Jsoneditor implements OnInit {
   error = '';
   isDarkMode = document.documentElement.classList.contains('dark');
 
-  constructor(public auth: FirebaseAuthService) {}
+  constructor(public auth: FirebaseAuthService) { }
 
   async ngOnInit() {
     try {
@@ -56,4 +56,13 @@ export class Jsoneditor implements OnInit {
     this.isDarkMode = !this.isDarkMode;
     document.documentElement.classList.toggle('dark', this.isDarkMode);
   }
+  copyJson() {
+    if (!this.jsonString) return;
+
+    navigator.clipboard.writeText(this.jsonString).then(
+      () => alert('✅ JSON copied to clipboard!'),
+      (err) => alert('❌ Failed to copy JSON: ' + err)
+    );
+  }
+
 }
