@@ -9,7 +9,7 @@
 <div class="flex h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100">
 
   <!-- Sidebar -->
-  <app-sidebar [data]="data" [toggleTheme]="toggleTheme.bind(this)" [isDarkMode]="isDarkMode" [ngClass]="{
+  <app-sidebar [data]="data" [toggleTheme]="toggleTheme.bind(this)" [isDarkMode]="isDarkMode" (itemSelected)="isSidebarOpen = false" [ngClass]="{
       'fixed top-0 left-0 transform -translate-x-full md:translate-x-0 md:relative md:transform-none': true,
       'translate-x-0': isSidebarOpen
     }" class="z-20 transition-transform h-full duration-300">

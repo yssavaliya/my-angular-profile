@@ -34,7 +34,7 @@
   <!-- Dynamic Navigation -->
   <nav class="flex flex-col space-y-2">
     <a *ngFor="let item of data?.navigation" [routerLink]="item.path" routerLinkActive="bg-gray-300 dark:bg-gray-700"
-      [routerLinkActiveOptions]="{ exact: true }"
+      [routerLinkActiveOptions]="{ exact: true }"  (click)="onItemClick()"
       class="px-4 py-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors duration-300">
       {{ item.label }}
     </a>

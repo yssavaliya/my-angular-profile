@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { LucideAngularModule, Sun, Moon } from 'lucide-angular';
@@ -12,6 +12,7 @@ export class Sidebar implements OnInit {
   @Input() data: any;
   @Input() toggleTheme!: () => void;
   @Input() isDarkMode!: boolean;
+  @Output() itemSelected = new EventEmitter<void>(); 
 
   SunIcon = Sun;
   MoonIcon = Moon;
@@ -24,5 +25,8 @@ export class Sidebar implements OnInit {
     const words = this.data.name.split(' ');
     if (words.length === 1) return words[0].charAt(0).toUpperCase();
     return (words[0].charAt(0) + words[1].charAt(0)).toUpperCase();
+  }
+  onItemClick() {
+    this.itemSelected.emit(); // 👈 Emit event when a link is clicked
   }
 }
